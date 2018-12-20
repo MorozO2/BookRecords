@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BookRecords", "BookRecords\BookRecords.vcxproj", "{42204F7D-2463-429D-A9E9-CF7C353C7ADE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{42204F7D-2463-429D-A9E9-CF7C353C7ADE}.Debug|x64.ActiveCfg = Debug|x64
+		{42204F7D-2463-429D-A9E9-CF7C353C7ADE}.Debug|x64.Build.0 = Debug|x64
+		{42204F7D-2463-429D-A9E9-CF7C353C7ADE}.Debug|x86.ActiveCfg = Debug|Win32
+		{42204F7D-2463-429D-A9E9-CF7C353C7ADE}.Debug|x86.Build.0 = Debug|Win32
+		{42204F7D-2463-429D-A9E9-CF7C353C7ADE}.Release|x64.ActiveCfg = Release|x64
+		{42204F7D-2463-429D-A9E9-CF7C353C7ADE}.Release|x64.Build.0 = Release|x64
+		{42204F7D-2463-429D-A9E9-CF7C353C7ADE}.Release|x86.ActiveCfg = Release|Win32
+		{42204F7D-2463-429D-A9E9-CF7C353C7ADE}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F3B2B42F-DEFD-427B-936B-8BBF62470A11}
+	EndGlobalSection
+EndGlobal

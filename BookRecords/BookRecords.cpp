@@ -10,15 +10,16 @@ int main()
 {
 	
 
-	Book b("Mody Dick", 56);
+	Book b("Moby Dick", 56);
 	Book c("Playboy", 67);
-	Book d("C++ for Moronslhkjögkghjfhjghjkgghjkh", 89);
+	Book d("C++ for Morons", 89);
 	d.changeStatus(true);
 	bookRecords rec;
 	rec.addBook(b);
 	rec.addBook(c);
 	rec.addBook(d);
 	rec.displayRecords();
+	rec.saveR();
 	
 	/*std::cout << "\n" << std::endl;
 

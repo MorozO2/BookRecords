@@ -6,12 +6,6 @@
 #include <fstream>
 
 //BOOK CLASS IMPLEMENTATIONS
-Book::Book(std::string n, int num)
-{
-	nameB = n;
-	idNum = num;
-}
-
 const std::string Book::bookStatus()
 {
 	if (borrowed == false)
@@ -23,7 +17,7 @@ const std::string Book::bookStatus()
 		return std::string("Not available");
 	}
 }
-void Book::changeStatus(bool c)
+void Book::changeStatus(bool c) //Fucntions that changed the borrowed/not borrowed status of a book
 {
 	borrowed = c;
 }
@@ -34,23 +28,23 @@ void Book::changeStatus(bool c)
 //BOOK RECORDS CLASS IMPLEMENTATIONS
 bookRecords::bookRecords()
 {
-	lib = new std::vector<Book>;
+	lib.reserve(10);
 }
 
 bookRecords::~bookRecords()
 {
-	delete lib;
-	std::cout << "rec dest done" << std::endl;
+	
+	std::cout << "BookRecords destroyed" << std::endl;
 }
 
-void bookRecords::addBook(Book b)
+void bookRecords::addBook(const Book& b)
 {
-	lib->push_back(b);
+	lib.emplace_back(b);
 }
 
 void bookRecords::displayRecords()
 {
-	for (auto i = lib->begin(); i != lib->end(); i++)
+	for (auto i = lib.begin(); i != lib.end(); i++)
 	{
 		
 		std::cout << i->bookStatus() <<"		"<< i->getBookName() <<"			"<<"Book No. "<< i->getBookNo() << std::endl;
@@ -61,7 +55,7 @@ void bookRecords::saveR()
 {
 	std::ofstream bookRec;
 	bookRec.open("bookRecords.txt", std::ios::app);
-	for (auto i = lib->begin(); i != lib->end(); i++)
+	for (auto i = lib.begin(); i != lib.end(); i++)
 	{
 		bookRec << i->getBookNo() << "	" << i->getBookName() << "	" << i->bookStatus() << "\n";
 	} 
@@ -77,11 +71,35 @@ void bookRecords::saveR()
 
 
 //PERSON RECORDS CLASS IMPLEMENTATION
+personRecords::personRecords()
+{
+	//per = new std::vector<Person>;
+	per.reserve(3);
+}
+
+personRecords::~personRecords()
+{
+	//delete per;
+	std::cout << "PersonRecords destroyed" << std::endl;
+}
+
+void personRecords::addPerson(const Person &p)
+{
+	per.emplace_back(p);
+}
+void personRecords::displayRecords()
+{
+	for (auto i = per.begin(); i != per.end(); i++)
+	{
+
+		std::cout << i->getNum() << "		" << i->getName() << std::endl;
+	}
+}
 void personRecords::saveR()
 {
 	std::ofstream personRec;
 	personRec.open("personRecords.txt", std::ios::app);
-	for (auto i = per->begin(); i != per->end(); i++)
+	for (auto i = per.begin(); i != per.end(); i++)
 	{
 		personRec << i->getNum() << "	" << i->getName() << "	" << "\n";
 	}

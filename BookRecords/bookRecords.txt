@@ -1,13 +1,3 @@
-56	Book 1	Available
-67	Playboy	Available
-89	C++ for Morons	Not available
-e
-56	Moby Dick	Available
-67	Playboy	Available
-89	C++ for Morons	Not available
-56	Moby Dick	Available
-67	Playboy	Available
-89	C++ for Morons	Not available
-56	Moby Dick	Available
-67	Playboy	Available
-89	C++ for Morons	Not available
+1598	Moby Dick	Available
+1689	Playboy	Available
+1579	C++ for Morons	Available

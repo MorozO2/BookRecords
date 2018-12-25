@@ -10,9 +10,9 @@ int main()
 {
 	
 
-	Book b("Moby Dick", 56);
-	Book c("Playboy", 67);
-	Book d("C++ for Morons", 89);
+	Book b("Moby Dick", 1598);
+	Book c("Playboy", 1689);
+	Book d("C++ for Morons", 1579);
 	d.changeStatus(true);
 	bookRecords rec;
 	rec.addBook(b);
@@ -21,6 +21,17 @@ int main()
 	rec.displayRecords();
 	rec.saveR();
 	
+
+	Person chad("Chad Ballwick", 789321);
+	Person bruce("Bruce Banner", 159753);
+	Person tony("Tony Hawk", 963258);
+	Person percy("Percy Dickens", 963258);
+	personRecords recP;
+	recP.addPerson(chad);
+	recP.addPerson(bruce);
+	recP.addPerson(tony);
+	recP.displayRecords();
+	recP.saveR();
 	/*std::cout << "\n" << std::endl;
 
 	

@@ -1,15 +1,5 @@
 #include "pch.h"
 #include "classes.h"
-#include <string>
-#include <iostream>
-#include <vector>
-#include <fstream>
-#include <iomanip>
-#pragma warning (disable:4996)
-#define addBuffer 10 //Addition memory allocated for the records vector for adding books
-#define bookID 5 //Length of ID numbers for books (5 digits) 
-#define personID 6 //Length of library card numbers for person (6 digits)
-#define lineStart 0
 
 //BOOK RECORDS CLASS IMPLEMENTATIONS
 bookRecords::bookRecords()
@@ -29,18 +19,26 @@ bookRecords::bookRecords()
 }
 
 bookRecords::~bookRecords()
-{
-	
+{	
 	std::cout << "BookRecords destroyed" << std::endl;
 }
 
 void bookRecords::addBook(/*const Book& b*/)
 {
 	std::string name;
+	bool present;
 	int num;
 	std::cout << "Please enter the book's name: "; std::cin.ignore(); getline(std::cin, name); std::cout << "\n";
-	std::cout << "Please enter a 5-digit number to identify the book: "; std::cin >> std::setw(bookID)>> num; std::cout << "\n";
-	bookRecs.emplace_back(name, num, true);
+	std::cout << "Please enter a 5-digit number to identify the book: "; std::cin >> std::setw(bookID) >> num; std::cout << "\n";
+	for (auto i = bookRecs.begin(); i != bookRecs.end(); i++)
+	{
+		if (i->getBookNo() == num) { present = true; }
+	}
+
+	if (present == true) { std::cout << "A book with this number is already in the library. Please enter a different number." << std::endl; }
+	else { bookRecs.emplace_back(name, num, true); std::cout << "Book added" << std::endl; }
+
+	std::cout << "Press any key to continue: "; std::cin.ignore(); std::cin.get();
 }
 
 void bookRecords::load()
@@ -61,7 +59,6 @@ void bookRecords::load()
 			num = std::stoi(line.substr(lineStart, bookID)); //Get the number of the book from the line
 			name = line.substr(bookID, line.length() - bookID - (line.length() - line.find("¤"))); //get the name from the file
 			card = std::stoi(line.substr(line.find("~") +1 , personID));	//Get the card number of the person who borrowed the book
-			std::cout << line.substr(line.find("¤")+1, 1);
 			if (line.substr(line.find("¤") + 1, 1) == "N")
 			{
 				available = false;
@@ -72,6 +69,7 @@ void bookRecords::load()
 	else {std::cout << "Error: could not open the file. Please check the source folder to see if bookRecords.txt is present." << std::endl;}
 	records.close();
 }
+
 void bookRecords::displayAll()
 {
 	std::string status;
@@ -91,8 +89,8 @@ void bookRecords::displayAll()
 		status = "Available";
 		std::cout << status << "  " << i->getBookName() << "  " << "ID " << i->getBookNo() << "\n" << std::endl;
 		}
-
 	}
+	std::cout << "Press any key to continue: "; std::cin.ignore(); std::cin.get();
 }
 
 void bookRecords::saveR()
@@ -112,14 +110,9 @@ void bookRecords::saveR()
 	records.close();
 	bookRecs.clear();
 	std::cout << "**CURRENT RECORDS HAVE BEEN SAVED TO DISC**" << std::endl;
+	std::cout << "Press any key to continue"; std::cin.ignore(); std::cin.get();
 }
-//BOOK RECORDS CLASS IMPLEMENTATIONS
-
-
-//PERSON CLASS IMPLEMENTATION
-
-//PERSON CLASS IMPLEMENTATION
-
+//BOOK RECORDS CLASS IMPLEMENTATIONS--------------------------------------------------------------------------------------------------------
 
 
 //PERSON RECORDS CLASS IMPLEMENTATION------------------------------------------------------------------------------------------------------
@@ -184,8 +177,10 @@ void personRecords::addPerson()
 	}
 
 	if (present == false) {pRecs.emplace_back(name, num);} //IF present BOOL IS FALSE, THAT MEANS THE LIBRARY CARD NUMBER IS NOT IN USE AND THE PERSON CAN BE ADDED TO THE RECORDS
-	else {std::cout << "This library card number is already in use" << std::endl;} 
+	else {std::cout << "This library card number is already in use" << std::endl;}
+	std::cout << "Press any key to continue"; std::cin.ignore(); std::cin.get();
 }
+
 void personRecords::displayAll()
 {
 	std::string status;
@@ -194,7 +189,10 @@ void personRecords::displayAll()
 	{
 		std::cout << status << "  " << i->getName() << "  " << "Card No. " << i->getNum() << std::endl;
 	}
+
+	std::cout << "Press any key to continue"; std::cin.ignore(); std::cin.get();
 }
+
 void personRecords::saveR()
 {
 	std::fstream records;
@@ -205,18 +203,23 @@ void personRecords::saveR()
 	}
 	pRecs.clear();
 	records.close();
+	std::cout << "Press any key to continue"; std::cin.ignore(); std::cin.get();
 }
 //PERSON RECORDS CLASS IMPLEMENTATION-------------------------------------------------------------------------
 
 //OTHER FUNCTIONS--------------------------------------------------------------
-void borrow_return(bookRecords& books, personRecords& people, bool borrow )
+void borrow_return(bookRecords& books, personRecords& people, bool borrow)
 {
 	int num;
 	int cardNum;
-	
+	bool wrong_person_ID;
+	bool not_borrowed;
+	bool book_available;
+	bool no_book;
 	std::cout << "Please the user's 6-digit library card number: "; cardNum = input(personID); std::cout << "\n";
 	for (auto i = people.pRecs.begin(); i != people.pRecs.end(); i++)
 	{
+		
 		if (cardNum == i->getNum())
 		{
 			std::cout << "Please enter the ID number of the book: "; num = input(bookID);
@@ -225,35 +228,39 @@ void borrow_return(bookRecords& books, personRecords& people, bool borrow )
 
 				if (b->bookStatus() == false && num == b->getBookNo() && borrow == true)
 				{
-					std::cout << "This book is currently not available" << std::endl;
+					book_available = false;
 				}
 				else if (num == b->getBookNo() && borrow == true)
 				{
 					b->changeStatus(false);
 					b->changeHolder(cardNum);
+					std::cout << b->getBookName() << " was borrowed. Return in " << DUE_DATE << " days." << std::endl;
 				}
 				else if (b->bookStatus() == false && num == b->getBookNo() && borrow == false)
 				{
 					b->changeStatus(true);
 					b->changeHolder(0);
+					std::cout << "Book successfully returned" << std::endl;
 				}
 				else if (b->bookStatus() == true && num == b->getBookNo() && borrow == true)
 				{
-					std::cout << "The book with said number has not been borrowed" << std::endl;
+					not_borrowed = true;
 				}
 
-				else
-				{
-					std::cout << "No such book in the library" << std::endl;
-				}
+				else { no_book = true; }
 			}
 		}
-
-		else
-		{
-			std::cout << "No cardholder with that number exists. Please register the card holder." << std::endl;
-		}
+		else { wrong_person_ID = true; }
 	}
+	
+	if (wrong_person_ID == true) { std::cout << "No cardholder with that number exists. Please register the card holder." << std::endl; }
+	else if (book_available == false) { std::cout << "This book is currently not available" << std::endl; }
+	else if (not_borrowed == true) { std::cout << "The book with said number has not been borrowed" << std::endl; }
+	else if (no_book == true) { std::cout << "This book is not in the library" << std::endl; }
+	
+
+	
+	std::cout << "Press any key to continue"; std::cin.ignore(); std::cin.get();
 }
 
 const int input(unsigned int limit)

@@ -1,9 +1,18 @@
 #pragma once
 #include "pch.h"
+#include <memory>
+#include "classes.h"
+#include <string>
 #include <iostream>
 #include <vector>
-#include <string>
-#include <memory>
+#include <fstream>
+#include <iomanip>
+#pragma warning (disable:4996)
+#define addBuffer 10 //Addition memory allocated for the records vector for adding books
+#define bookID 5 //Length of ID numbers for books (5 digits) 
+#define personID 6 //Length of library card numbers for person (6 digits)
+#define lineStart 0
+#define DUE_DATE 30
 
 const int input(unsigned int limit);
 

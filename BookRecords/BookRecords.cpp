@@ -6,6 +6,7 @@
 #include <iostream>
 #include <fstream>
 
+
 int main()
 {
 	int select = 0;
@@ -17,29 +18,40 @@ int main()
 	{
 		std::cout << "Welcomes to LibraryRecords. Please select an option:" << std::endl;
 		std::cout << "\n" << std::endl;
+
+		std::cout << "||DISPLAY RECORDS||" << std::endl;
 		std::cout << "Enter 1 to display current book records" << std::endl;
 		std::cout << "Enter 2 to display current card holder records" << std::endl;
-		std::cout << "Enter 3 to save current records" << std::endl;
-		std::cout << "Enter 4 to add new book to library." << std::endl;
-		std::cout << "Enter 5 to add new card holder" << std::endl;
+		std::cout << "\n" << std::endl;
+
+		std::cout << "||ADD TO RECORDS||" << std::endl;
+		std::cout << "Enter 3 to add new book to library." << std::endl;
+		std::cout << "Enter 4 to add new card holder" << std::endl;
+		std::cout << "Enter 5 to save current records" << std::endl;
+		std::cout << "\n" << std::endl;
+
+		std::cout << "||BORROW/RETURN BOOKS||" << std::endl;
 		std::cout << "Enter 6 to borrow a book." << std::endl;
 		std::cout << "Enter 7 to return a borrowed book." << std::endl;
-		std::cout << "Enter 8 to see all books currently available." << std::endl;
+		std::cout << "\n" << std::endl;
+
+		std::cout << "||CLEAR/RELOAD RECORDS||" << std::endl;
+		std::cout << "Enter 8 to save current records" << std::endl;
+		std::cout << "Enter 9 to see all books currently available." << std::endl;
 		std::cout << "\n" << std::endl;
 
 		std::cin >> select;
-		switch (select)
-		{
-		case 1: books.displayAll(); break;
-		case 2: people.displayAll();break;
-		case 3: books.saveR(); people.saveR(); books.load(); people.load();break;
-		case 4: books.addBook(); break;
-		case 5: people.addPerson(); break;
-		case 6: borrow_return(books, people, true);break;
-		case 7: borrow_return(books, people, false);break;
-		case 8: break;
-		}
+		if (select == 1) { books.displayAll(); };
+		if (select == 2) { people.displayAll(); };
+		if (select == 3) { books.addBook(); };
+		if (select == 4) { people.addPerson(); };
+		if (select == 5) { books.saveR(); people.saveR(); books.load(); people.load(); };
+		if (select == 6) { borrow_return(books, people, true); };
+		if (select == 7) { borrow_return(books, people, false); };
+		if (select == 8) {};
+		if (select == 9) {};
 	}
+	
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

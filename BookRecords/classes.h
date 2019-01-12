@@ -5,7 +5,7 @@
 #include <string>
 #include <memory>
 
-const int input(int limit);
+const int input(unsigned int limit);
 
 //BOOK CLASS----------------------------------------------------------------------------------------------------------------------------
 class Book

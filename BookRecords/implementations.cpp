@@ -5,6 +5,7 @@
 #include <vector>
 #include <fstream>
 #include <iomanip>
+#pragma warning (disable:4996)
 #define addBuffer 10 //Addition memory allocated for the records vector for adding books
 #define bookID 5 //Length of ID numbers for books (5 digits) 
 #define personID 6 //Length of library card numbers for person (6 digits)
@@ -39,7 +40,6 @@ void bookRecords::addBook(/*const Book& b*/)
 	int num;
 	std::cout << "Please enter the book's name: "; std::cin.ignore(); getline(std::cin, name); std::cout << "\n";
 	std::cout << "Please enter a 5-digit number to identify the book: "; std::cin >> std::setw(bookID)>> num; std::cout << "\n";
-	
 	bookRecs.emplace_back(name, num, true);
 }
 
@@ -69,10 +69,7 @@ void bookRecords::load()
 			bookRecs.emplace_back(name, num, available, card); //Constructs a "book" object inside bookRecs vector with the parameters received from the file line
 		}
 	}
-	else 
-	{
-		std::cout << "Error: could not open the file. Please check the source folder to see if bookRecords.txt is present." << std::endl;
-	}
+	else {std::cout << "Error: could not open the file. Please check the source folder to see if bookRecords.txt is present." << std::endl;}
 	records.close();
 }
 void bookRecords::displayAll()
@@ -107,21 +104,11 @@ void bookRecords::saveR()
 	{
 		for (auto i = bookRecs.begin(); i != bookRecs.end(); i++)
 		{
-			if (i->bookStatus() == true)
-			{
-				records << i->getBookNo() << i->getBookName() << "¤A" << "~" << i->getCardHolder()<< std::endl;
-			}
-			else if (i->bookStatus() == false)
-			{
-				records << i->getBookNo() << i->getBookName() << "¤N" << "~" << i->getCardHolder() << std::endl;
-			}
-
+			if (i->bookStatus() == true) {records << i->getBookNo() << i->getBookName() << "¤A" << "~" << i->getCardHolder()<< std::endl;}
+			else if (i->bookStatus() == false) {records << i->getBookNo() << i->getBookName() << "¤N" << "~" << i->getCardHolder() << std::endl;}
 		}
 	}
-	else
-	{
-		std::cout << "Error: could not open the file. Please check the source folder to see if bookRecords.txt is present." << std::endl;
-	}
+	else {std::cout << "Error: could not open the file. Please check the source folder to see if bookRecords.txt is present." << std::endl;}
 	records.close();
 	bookRecs.clear();
 	std::cout << "**CURRENT RECORDS HAVE BEEN SAVED TO DISC**" << std::endl;
@@ -190,23 +177,14 @@ void personRecords::addPerson()
 	bool present = false;
 	int num;
 	std::cout << "Please enter the person's name: "; std::cin.ignore(); getline(std::cin, name); std::cout << "\n";
-	std::cout << "please enter a 6-library card number: "; std::cin >> num;
+	std::cout << "please enter a 6-library card number: "; num = input(personID);
 	for(auto i = pRecs.begin(); i != pRecs.end(); i++)
 	{
-		if (i->getNum() == num)
-		{
-			present = true;
-		}
-	}
-	if (present == false)
-	{
-		pRecs.emplace_back(name, num);
+		if (i->getNum() == num) {present = true;} //SET present BOOL TO TRUE (SINGNIFYING THAT LIBRARY CARD NUMBER IS ALREADY IN USE)
 	}
 
-	else
-	{
-		std::cout << "This library card number is already in use" << std::endl;
-	}
+	if (present == false) {pRecs.emplace_back(name, num);} //IF present BOOL IS FALSE, THAT MEANS THE LIBRARY CARD NUMBER IS NOT IN USE AND THE PERSON CAN BE ADDED TO THE RECORDS
+	else {std::cout << "This library card number is already in use" << std::endl;} 
 }
 void personRecords::displayAll()
 {
@@ -236,12 +214,12 @@ void borrow_return(bookRecords& books, personRecords& people, bool borrow )
 	int num;
 	int cardNum;
 	
-	std::cout << "Please the user's 6-digit library card number: "; std::cin >> std::setw(personID) >> cardNum; std::cout << "\n";
+	std::cout << "Please the user's 6-digit library card number: "; cardNum = input(personID); std::cout << "\n";
 	for (auto i = people.pRecs.begin(); i != people.pRecs.end(); i++)
 	{
 		if (cardNum == i->getNum())
 		{
-			std::cout << "Please enter the ID number of the book: "; std::cin >> std::setw(bookID) >> num;
+			std::cout << "Please enter the ID number of the book: "; num = input(bookID);
 			for (auto b = books.bookRecs.begin(); b != books.bookRecs.end(); b++)
 			{
 
@@ -278,15 +256,22 @@ void borrow_return(bookRecords& books, personRecords& people, bool borrow )
 	}
 }
 
-const int input(int limit)
+const int input(unsigned int limit)
 {
-	int input;
-	int count = 0;
-	while ((input = getchar()) != && count < limit);
+	bool valid = false;
+	std::string check;
+	
+	do
 	{
-		count++;
-	}
-
-	return input;
+		std::cin >> check;
+		if (check.length() != limit) 
+		{ 
+			if (check.length() > limit) { std::cout << "Error: number is too long. Please enter a "<< limit << "-digit number"<< std::endl; valid = false; }
+			else if (check.length() < limit) { std::cout << "Error: number is too short. Please enter a "<< limit <<"-digit number." << std::endl; valid = false; }
+		}
+		else { valid = true; }
+	} while (valid == false);
+	
+	return std::stoi(check);
 }
 //OTHER FUNCTIONS--------------------------------------------------------------

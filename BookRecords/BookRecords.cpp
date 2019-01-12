@@ -13,8 +13,6 @@ int main()
 	personRecords people;
 	people.load();
 	books.load();
-	int num = input(6);
-	std::cout << input(6) << std::endl;
 	for (;;)
 	{
 		std::cout << "Welcomes to LibraryRecords. Please select an option:" << std::endl;

@@ -8,43 +8,40 @@
 
 int main()
 {
-	
+	int select = 0;
+	bookRecords books;
+	personRecords people;
+	people.load();
+	books.load();
+	int num = input(6);
+	std::cout << input(6) << std::endl;
+	for (;;)
+	{
+		std::cout << "Welcomes to LibraryRecords. Please select an option:" << std::endl;
+		std::cout << "\n" << std::endl;
+		std::cout << "Enter 1 to display current book records" << std::endl;
+		std::cout << "Enter 2 to display current card holder records" << std::endl;
+		std::cout << "Enter 3 to save current records" << std::endl;
+		std::cout << "Enter 4 to add new book to library." << std::endl;
+		std::cout << "Enter 5 to add new card holder" << std::endl;
+		std::cout << "Enter 6 to borrow a book." << std::endl;
+		std::cout << "Enter 7 to return a borrowed book." << std::endl;
+		std::cout << "Enter 8 to see all books currently available." << std::endl;
+		std::cout << "\n" << std::endl;
 
-	Book b("Moby Dick", 1598);
-	Book c("Playboy", 1689);
-	Book d("C++ for Morons", 1579);
-	d.changeStatus(true);
-	bookRecords rec;
-	rec.addBook(b);
-	rec.addBook(c);
-	rec.addBook(d);
-	rec.displayRecords();
-	rec.saveR();
-	
-
-	Person chad("Chad Ballwick", 789321);
-	Person bruce("Bruce Banner", 159753);
-	Person tony("Tony Hawk", 963258);
-	Person percy("Percy Dickens", 963258);
-	personRecords recP;
-	recP.addPerson(chad);
-	recP.addPerson(bruce);
-	recP.addPerson(tony);
-	recP.displayRecords();
-	recP.saveR();
-	/*std::cout << "\n" << std::endl;
-
-	
-	std::cout << "Welcomes to LibraryRecords. Please select an option:" << std::endl;
-	std::cout << "\n" << std::endl;
-	std::cout << "Enter 1 to clear all library records." << std::endl;
-	std::cout << "Enter 2 to save all current records to disc." << std::endl;
-	std::cout << "Enter 3 to retrieve records from disc." << std::endl;
-	std::cout << "Enter 4 to add new book to library." << std::endl;
-	std::cout << "Enter 5 to borrow a book." << std::endl;
-	std::cout << "Enter 6 to return a borrowed book." << std::endl;
-	std::cout << "Enter 7 to see all books currently available." << std::endl;
-	std::cout << "\n" << std::endl;*/
+		std::cin >> select;
+		switch (select)
+		{
+		case 1: books.displayAll(); break;
+		case 2: people.displayAll();break;
+		case 3: books.saveR(); people.saveR(); books.load(); people.load();break;
+		case 4: books.addBook(); break;
+		case 5: people.addPerson(); break;
+		case 6: borrow_return(books, people, true);break;
+		case 7: borrow_return(books, people, false);break;
+		case 8: break;
+		}
+	}
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

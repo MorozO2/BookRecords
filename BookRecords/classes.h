@@ -25,9 +25,9 @@ private:
 	bool available;
 	int cardBorrowed = 0;
 public:
-	Book(const std::string &n, int num, const bool& availability, int card = 0) :title(n), idNum(num), available(availability), cardBorrowed(card) { std::cout << "Book" << std::endl; }; //CONSTRUCTOR 
-	Book(const Book& b) : title(b.title), idNum(b.idNum), available(b.available) { std::cout << "Book copy" << std::endl; }; // COPY CONSTRUCTOR 
-	~Book() { std::cout << "book dest done" << std::endl; } //DESTRUCTOR
+	Book(const std::string &n, int num, const bool& availability, int card = 0) :title(n), idNum(num), available(availability), cardBorrowed(card) { /*std::cout << "Book" << std::endl;*/ }; //CONSTRUCTOR 
+	Book(const Book& b) : title(b.title), idNum(b.idNum), available(b.available) {/* std::cout << "Book copy" << std::endl; */}; // COPY CONSTRUCTOR 
+	~Book() { /*std::cout << /*"book dest done" << std::endl;*/ } //DESTRUCTOR
 
 	const std::string getBookName() { return title; } //FUNCTION FOR GETTING THE NAME OF THE BOOK
 	const int getBookNo() { return idNum; } //FUNCTION FOR GETTING THE ID NUMBER OF THE BOOK
@@ -46,11 +46,11 @@ private:
 	std::string nameP;
 	int cardNum;
 public:
-	Person(const std::string &n, int num) : nameP(n), cardNum(num) { std::cout << "Person" << std::endl; };
-	Person(const Person &p) : nameP(p.nameP), cardNum(p.cardNum) { std::cout << "Person copy" << std::endl; };
+	Person(const std::string &n, int num) : nameP(n), cardNum(num) { /*std::cout << "Person" << std::endl;*/ };
+	Person(const Person &p) : nameP(p.nameP), cardNum(p.cardNum) { /*std::cout << "Person copy" << std::endl;*/ };
 	const std::string getName() { return nameP; };
 	const int getNum() { return cardNum; }
-	~Person() { std::cout << "Person dest done" << std::endl; };
+	~Person() { /*std::cout << "Person dest done" << std::endl;*/ };
 };
 //PERSON CLASS-----------------------------------------------------------------------------------------------------------
 
@@ -69,7 +69,7 @@ private:
 	std::vector<Book> bookRecs;
 public:
 	bookRecords(); //Constructor
-	~bookRecords(); //destructor
+	~bookRecords() {}; //destructor
 	void load();
 	void displayAll();
 	void addBook();
@@ -91,7 +91,7 @@ private:
 	std::vector<Person> pRecs;
 public:
 	personRecords();
-	~personRecords();
+	~personRecords() {};
 	void load();
 	void addPerson();
 	void displayAll();

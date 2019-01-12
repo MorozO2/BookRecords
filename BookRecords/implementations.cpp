@@ -18,12 +18,7 @@ bookRecords::bookRecords()
 	records.close();
 }
 
-bookRecords::~bookRecords()
-{	
-	std::cout << "BookRecords destroyed" << std::endl;
-}
-
-void bookRecords::addBook(/*const Book& b*/)
+void bookRecords::addBook()
 {
 	std::string name;
 	bool present;
@@ -132,10 +127,7 @@ personRecords::personRecords()
 	records.close();
 }
 
-personRecords::~personRecords()
-{
-	std::cout << "PersonRecords destroyed" << std::endl;
-}
+
 void personRecords::load()
 {
 	std::string line;	//Sting for getting one line from the txt file

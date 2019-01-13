@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "classes.h"
 
+
 //BOOK RECORDS CLASS IMPLEMENTATIONS
 bookRecords::bookRecords()
 {	
@@ -24,7 +25,7 @@ void bookRecords::addBook()
 	bool present;
 	int num;
 	std::cout << "Please enter the book's name: "; std::cin.ignore(); getline(std::cin, name); std::cout << "\n";
-	std::cout << "Please enter a 5-digit number to identify the book: "; std::cin >> std::setw(bookID) >> num; std::cout << "\n";
+	std::cout << "Please enter a 5-digit number to identify the book: "; num = input(bookID);
 	for (auto i = bookRecs.begin(); i != bookRecs.end(); i++)
 	{
 		if (i->getBookNo() == num) { present = true; }
@@ -204,14 +205,10 @@ void borrow_return(bookRecords& books, personRecords& people, bool borrow)
 {
 	int num;
 	int cardNum;
-	bool wrong_person_ID;
-	bool not_borrowed;
-	bool book_available;
-	bool no_book;
+	
 	std::cout << "Please the user's 6-digit library card number: "; cardNum = input(personID); std::cout << "\n";
 	for (auto i = people.pRecs.begin(); i != people.pRecs.end(); i++)
 	{
-		
 		if (cardNum == i->getNum())
 		{
 			std::cout << "Please enter the ID number of the book: "; num = input(bookID);
@@ -220,7 +217,7 @@ void borrow_return(bookRecords& books, personRecords& people, bool borrow)
 
 				if (b->bookStatus() == false && num == b->getBookNo() && borrow == true)
 				{
-					book_available = false;
+					goto not_available;
 				}
 				else if (num == b->getBookNo() && borrow == true)
 				{
@@ -236,21 +233,20 @@ void borrow_return(bookRecords& books, personRecords& people, bool borrow)
 				}
 				else if (b->bookStatus() == true && num == b->getBookNo() && borrow == true)
 				{
-					not_borrowed = true;
+					goto not_borrowed;
 				}
 
-				else { no_book = true; }
+				else { goto not_present; }
 			}
 		}
-		else { wrong_person_ID = true; }
+		
+		else { goto no_card; }
 	}
 	
-	if (wrong_person_ID == true) { std::cout << "No cardholder with that number exists. Please register the card holder." << std::endl; }
-	else if (book_available == false) { std::cout << "This book is currently not available" << std::endl; }
-	else if (not_borrowed == true) { std::cout << "The book with said number has not been borrowed" << std::endl; }
-	else if (no_book == true) { std::cout << "This book is not in the library" << std::endl; }
-	
-
+	no_card:  std::cout << "No cardholder with that number exists. Please register the card holder." << std::endl;
+	not_available: { std::cout << "This book is currently not available" << std::endl; }
+	not_borrowed: { std::cout << "The book with said number has not been borrowed" << std::endl; }
+	not_present: { std::cout << "This book is not in the library" << std::endl; }
 	
 	std::cout << "Press any key to continue"; std::cin.ignore(); std::cin.get();
 }

@@ -6,7 +6,6 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
-#include <iomanip>
 #pragma warning (disable:4996)
 #define addBuffer 10 //Addition memory allocated for the records vector for adding books
 #define bookID 5 //Length of ID numbers for books (5 digits) 

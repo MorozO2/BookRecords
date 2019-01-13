@@ -205,10 +205,12 @@ void borrow_return(bookRecords& books, personRecords& people, bool borrow)
 {
 	int num;
 	int cardNum;
+	int message = 0;
 	
 	std::cout << "Please the user's 6-digit library card number: "; cardNum = input(personID); std::cout << "\n";
 	for (auto i = people.pRecs.begin(); i != people.pRecs.end(); i++)
 	{
+
 		if (cardNum == i->getNum())
 		{
 			std::cout << "Please enter the ID number of the book: "; num = input(bookID);
@@ -217,7 +219,7 @@ void borrow_return(bookRecords& books, personRecords& people, bool borrow)
 
 				if (b->bookStatus() == false && num == b->getBookNo() && borrow == true)
 				{
-					goto not_available;
+					message = 2; goto error_message;
 				}
 				else if (num == b->getBookNo() && borrow == true)
 				{
@@ -233,20 +235,20 @@ void borrow_return(bookRecords& books, personRecords& people, bool borrow)
 				}
 				else if (b->bookStatus() == true && num == b->getBookNo() && borrow == true)
 				{
-					goto not_borrowed;
+					message = 3; goto error_message;
 				}
 
-				else { goto not_present; }
+				else { message = 4; goto error_message; }
 			}
 		}
 		
-		else { goto no_card; }
+		else { message = 1; goto error_message; }
 	}
-	
-	no_card:  std::cout << "No cardholder with that number exists. Please register the card holder." << std::endl;
-	not_available: { std::cout << "This book is currently not available" << std::endl; }
-	not_borrowed: { std::cout << "The book with said number has not been borrowed" << std::endl; }
-	not_present: { std::cout << "This book is not in the library" << std::endl; }
+	error_message:
+	if(message == 1) { no_card:  std::cout << "No cardholder with that number exists. Please register the card holder." << std::endl; }
+	else if(message == 2) {not_available:  std::cout << "This book is currently not available" << std::endl; }
+	else if(message == 3) {not_borrowed: std::cout << "The book with said number has not been borrowed" << std::endl; }
+	else if(message == 4) {not_present: std::cout << "This book is not in the library" << std::endl; }
 	
 	std::cout << "Press any key to continue"; std::cin.ignore(); std::cin.get();
 }

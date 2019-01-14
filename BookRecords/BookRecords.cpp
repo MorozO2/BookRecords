@@ -16,40 +16,50 @@ int main()
 	books.load();
 	for (;;)
 	{
-		std::cout << "Welcomes to LibraryRecords. Please select an option:" << std::endl;
+		std::cout << "\n" <<"Welcomes to LibraryRecords. Please select an option:" << "\n" << "\n" << std::endl;
 		std::cout << "\n" << std::endl;
 
 		std::cout << "||DISPLAY RECORDS||" << std::endl;
 		std::cout << "Enter 1 to display current book records" << std::endl;
-		std::cout << "Enter 2 to display current card holder records" << std::endl;
-		std::cout << "\n" << std::endl;
+		std::cout << "Enter 2 to display current card holder records" << "\n" << "\n" <<std::endl;
 
 		std::cout << "||ADD TO RECORDS||" << std::endl;
 		std::cout << "Enter 3 to add new book to library." << std::endl;
 		std::cout << "Enter 4 to add new card holder" << std::endl;
-		std::cout << "Enter 5 to save current records" << std::endl;
-		std::cout << "\n" << std::endl;
+		std::cout << "Enter 5 to save current records" << "\n" << "\n" << std::endl;
 
 		std::cout << "||BORROW/RETURN BOOKS||" << std::endl;
 		std::cout << "Enter 6 to borrow a book." << std::endl;
-		std::cout << "Enter 7 to return a borrowed book." << std::endl;
-		std::cout << "\n" << std::endl;
+		std::cout << "Enter 7 to return a borrowed book." << "\n" << "\n" << std::endl;
+
+		std::cout << "||CHECK RECORDS||" << std::endl;
+		std::cout << "Enter 8 to search for a book by ID number." << std::endl;
+		std::cout << "Enter 9 to search for a person by library card number." << "\n" << "\n" << std::endl;
 
 		std::cout << "||CLEAR/RELOAD RECORDS||" << std::endl;
-		std::cout << "Enter 8 to save current records" << std::endl;
-		std::cout << "Enter 9 to see all books currently available." << std::endl;
-		std::cout << "\n" << std::endl;
+		std::cout << "Enter 10 to clear all current book records" << std::endl;
+		std::cout << "Enter 11 to clear all current person records" << std::endl;
+		std::cout << "Enter 12 to load book records" << std::endl;
+		std::cout << "Enter 13 to load person records" << "\n" << "\n" << std::endl;
 
+		std::cout << "||TO EXIT PROGRAM ENTER 0. PLEASE REMEMBER TO SAVE RECORDS BEFORE EXITING.||" << "\n" << "\n" << std::endl;
+	
 		std::cin >> select;
-		if (select == 1) { books.displayAll(); };
-		if (select == 2) { people.displayAll(); };
-		if (select == 3) { books.addBook(); };
-		if (select == 4) { people.addPerson(); };
-		if (select == 5) { books.saveR(); people.saveR(); books.load(); people.load(); };
-		if (select == 6) { borrow_return(books, people, true); };
-		if (select == 7) { borrow_return(books, people, false); };
-		if (select == 8) {};
-		if (select == 9) {};
+		if (select == 1) { books.displayAll(); }
+		else if (select == 2) { people.displayAll(); }
+		else if (select == 3) { books.addBook(); }
+		else if (select == 4) { people.addPerson(); }
+		else if (select == 5) { books.saveR(); people.saveR(); books.load(); people.load(); }
+		else if (select == 6) { borrow_return(books, people, true); }
+		else if (select == 7) { borrow_return(books, people, false); }
+		else if (select == 8) { books.find(); }
+		else if (select == 9) { people.find(); }
+		else if (select == 10) { books.clear(); }
+		else if (select == 11) { people.clear(); }
+		else if (select == 12) { books.load(); }
+		else if (select ==13) { people.load(); }
+		else if (select == 0) { exit(0); }
+		else { std::cout << "ERROR: Please enter one of the given numbers" << std::endl; }
 	}
 	
 }
